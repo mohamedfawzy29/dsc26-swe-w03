@@ -1,22 +1,14 @@
-# AI usage
-
-Keep all three headings exactly as they are. If this file is missing or any heading is
-missing, the grader stops and gives 0 ("AI_USAGE.md missing or incomplete"). The content
-is not scored, but your Track Mentor reads it and the W8 defence can ask about it.
-
 ## Tools
-
-<!-- Which tools you used (ChatGPT, Copilot, Claude, Cursor, none...) and for which parts. -->
+claude code via antigravity for planning and codex for code generation and debugging Used it for all the phases.
 
 ## What AI got wrong
-
-<!-- At least one thing an assistant got wrong that you changed, and how you noticed
-(a test failed, the docs said otherwise, you ran it). -->
+the Ai initially wrote the post endpoint using async def with await request.body() which caused the testClient to hang on Windows due to a socket.socketpair() issue in the sandbox. I noticed it because the test timed out. The fix was to use def (sync) with the body parsed via Pydantic directly from the payload parameter.
 
 ## In my own words
-
-<!-- Answer without AI, one or two sentences each. -->
-
 1. Why does a transfer to someone else's account return 404 and not 403?
 
+- to secure the users data information if you return 403 it means that the user is not authorized to perform the action but in this case the user is authorized but the account is not found so it will lead to account enumeration attacks
+
 2. What would happen to a customer if your idempotency record were written in a separate transaction after the transfer?
+
+- if the transfer money is successful in a transaction and the idempotency record is written in a separate transaction if the database server crashes or the seconed transaction failed the money will be deducted from the users account but the idempotency record will not be written so it will lead to duplicate transactions
